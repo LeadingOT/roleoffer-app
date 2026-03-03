@@ -8,7 +8,8 @@ type Props = {
 
 export async function generateStaticParams() {
   const slugs = await getAllCombinations();
-  return slugs.slice(0, 100).map((slug) => ({
+  // Generate all 2,160 unique combinations for full pSEO coverage
+  return slugs.map((slug) => ({
     slug,
   }));
 }

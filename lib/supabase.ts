@@ -93,16 +93,34 @@ export function generateSlug(filters: {
 
 // Get all unique combinations for static generation
 export async function getAllCombinations() {
-  const { data } = await supabase
-    .from('comp_data')
-    .select('role, level, stage, location')
-    .limit(10000);
+  // Fetch all data with pagination (Supabase default limit is 1000)
+  let allData: any[] = [];
+  let from = 0;
+  const pageSize = 1000;
   
-  if (!data) return [];
+  while (true) {
+    const { data, error } = await supabase
+      .from('comp_data')
+      .select('role, level, stage, location')
+      .range(from, from + pageSize - 1);
+    
+    if (error) {
+      console.error('Error fetching combinations:', error);
+      break;
+    }
+    
+    if (!data || data.length === 0) break;
+    
+    allData = allData.concat(data);
+    
+    if (data.length < pageSize) break; // Last page
+    
+    from += pageSize;
+  }
   
   // Get unique combinations
   const combos = new Set<string>();
-  data.forEach(row => {
+  allData.forEach(row => {
     combos.add(generateSlug({
       role: row.role,
       level: row.level,
@@ -110,6 +128,8 @@ export async function getAllCombinations() {
       location: row.location
     }));
   });
+  
+  console.log(`Fetched ${allData.length} rows, generated ${combos.size} unique combinations for pSEO`);
   
   return Array.from(combos);
 }
