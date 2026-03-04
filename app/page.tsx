@@ -41,7 +41,7 @@ export default function HomePage() {
             className="block p-4 border rounded-lg hover:border-blue-500 hover:shadow-md transition"
           >
             <h3 className="font-semibold text-lg mb-2">Senior Engineer (IC4)</h3>
-            <p className="text-sm text-gray-600">Series A • San Francisco</p>
+            <p className="text-sm text-gray-600">$10M-$25M • San Francisco</p>
             <p className="text-blue-600 font-bold mt-2">View Benchmarks →</p>
           </a>
           
@@ -50,25 +50,25 @@ export default function HomePage() {
             className="block p-4 border rounded-lg hover:border-blue-500 hover:shadow-md transition"
           >
             <h3 className="font-semibold text-lg mb-2">Product Manager (IC3)</h3>
-            <p className="text-sm text-gray-600">Seed • New York</p>
+            <p className="text-sm text-gray-600">$1M-$10M • New York</p>
             <p className="text-blue-600 font-bold mt-2">View Benchmarks →</p>
           </a>
           
           <a
-            href="/compensation/engineering-ic6-series-b-san-francisco"
+            href="/compensation/engineering-ic6-seed-san-francisco"
             className="block p-4 border rounded-lg hover:border-blue-500 hover:shadow-md transition"
           >
             <h3 className="font-semibold text-lg mb-2">Staff Engineer (IC6)</h3>
-            <p className="text-sm text-gray-600">Series B • San Francisco</p>
+            <p className="text-sm text-gray-600">$1M-$10M • San Francisco</p>
             <p className="text-blue-600 font-bold mt-2">View Benchmarks →</p>
           </a>
           
           <a
-            href="/compensation/design-ic4-late-a-austin"
+            href="/compensation/design-ic4-seed-austin"
             className="block p-4 border rounded-lg hover:border-blue-500 hover:shadow-md transition"
           >
             <h3 className="font-semibold text-lg mb-2">Senior Designer (IC4)</h3>
-            <p className="text-sm text-gray-600">Late Series A • Austin</p>
+            <p className="text-sm text-gray-600">$1M-$10M • Austin</p>
             <p className="text-blue-600 font-bold mt-2">View Benchmarks →</p>
           </a>
         </div>
