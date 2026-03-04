@@ -1,6 +1,24 @@
 export default function HomePage() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'RoleOffer',
+    description: 'Startup compensation benchmarks and salary data',
+    url: 'https://roleoffer.com',
+    publisher: {
+      '@type': 'Organization',
+      name: 'RoleOffer',
+      url: 'https://roleoffer.com'
+    }
+  };
+
   return (
-    <div className="max-w-4xl mx-auto">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <div className="max-w-4xl mx-auto">
       <div className="text-center mb-12">
         <h1 className="text-5xl font-bold mb-4">
           Know Your Worth at Startups
@@ -93,5 +111,6 @@ export default function HomePage() {
         </ul>
       </div>
     </div>
+    </>
   );
 }
