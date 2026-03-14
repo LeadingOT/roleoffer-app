@@ -148,8 +148,8 @@ export default async function CompensationPage({ params }: Props) {
       <div className="bg-blue-50 rounded-lg p-6 mb-8">
         <h2 className="text-xl font-bold mb-3">About This Data</h2>
         <p className="text-gray-700 mb-3">
-          This compensation data is compiled from real benchmarks including Carta equity reports, 
-          H1B salary databases, and salary transparency job postings.
+          This compensation data is compiled from public sources including DOL H1B disclosures, 
+          state salary transparency job postings, and published startup compensation surveys.
         </p>
         <ul className="space-y-2 text-sm text-gray-700">
           <li>• <strong>Role:</strong> {sample.role_label} ({sample.level_label})</li>
