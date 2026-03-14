@@ -1,6 +1,13 @@
 import { Metadata } from 'next';
 import { getCompData, parseSlug, getAllCombinations } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
+import { 
+  generateOverview, 
+  generateEquityInsights, 
+  generateNegotiationTips,
+  generateCareerProgression,
+  generateLocationInsights 
+} from '@/lib/content-generator';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -142,6 +149,107 @@ export default async function CompensationPage({ params }: Props) {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Market Overview */}
+      <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <h2 className="text-2xl font-bold mb-4">Market Overview</h2>
+        <p className="text-gray-700 leading-relaxed">
+          {generateOverview({
+            role: sample.role,
+            role_label: sample.role_label,
+            level: sample.level_label,
+            level_name: sample.level_name,
+            stage: sample.stage,
+            stage_label: sample.stage_label,
+            location: sample.location,
+            location_label: sample.location_label,
+            median_salary: p50.salary,
+            median_equity: p50.equity_pct,
+          })}
+        </p>
+      </div>
+
+      {/* Equity Deep Dive */}
+      <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <h2 className="text-2xl font-bold mb-4">Understanding Your Equity</h2>
+        <p className="text-gray-700 leading-relaxed mb-4">
+          {generateEquityInsights({
+            role: sample.role,
+            role_label: sample.role_label,
+            level: sample.level_label,
+            level_name: sample.level_name,
+            stage: sample.stage,
+            stage_label: sample.stage_label,
+            location: sample.location,
+            location_label: sample.location_label,
+            median_salary: p50.salary,
+            median_equity: p50.equity_pct,
+          })}
+        </p>
+        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4">
+          <p className="text-sm text-gray-700">
+            <strong>Pro tip:</strong> Always ask about the company's fully-diluted cap table, liquidation preferences, 
+            and post-termination exercise window (ideally 5-10 years, not 90 days).
+          </p>
+        </div>
+      </div>
+
+      {/* Negotiation Tips */}
+      <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <h2 className="text-2xl font-bold mb-4">How to Negotiate This Offer</h2>
+        <p className="text-gray-700 leading-relaxed">
+          {generateNegotiationTips({
+            role: sample.role,
+            role_label: sample.role_label,
+            level: sample.level_label,
+            level_name: sample.level_name,
+            stage: sample.stage,
+            stage_label: sample.stage_label,
+            location: sample.location,
+            location_label: sample.location_label,
+            median_salary: p50.salary,
+            median_equity: p50.equity_pct,
+          })}
+        </p>
+      </div>
+
+      {/* Career Progression */}
+      <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <h2 className="text-2xl font-bold mb-4">Career Growth Path</h2>
+        <p className="text-gray-700 leading-relaxed">
+          {generateCareerProgression({
+            role: sample.role,
+            role_label: sample.role_label,
+            level: sample.level_label,
+            level_name: sample.level_name,
+            stage: sample.stage,
+            stage_label: sample.stage_label,
+            location: sample.location,
+            location_label: sample.location_label,
+            median_salary: p50.salary,
+            median_equity: p50.equity_pct,
+          })}
+        </p>
+      </div>
+
+      {/* Location Context */}
+      <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <h2 className="text-2xl font-bold mb-4">{sample.location_label} Startup Market</h2>
+        <p className="text-gray-700 leading-relaxed">
+          {generateLocationInsights({
+            role: sample.role,
+            role_label: sample.role_label,
+            level: sample.level_label,
+            level_name: sample.level_name,
+            stage: sample.stage,
+            stage_label: sample.stage_label,
+            location: sample.location,
+            location_label: sample.location_label,
+            median_salary: p50.salary,
+            median_equity: p50.equity_pct,
+          })}
+        </p>
       </div>
 
       {/* Context */}
