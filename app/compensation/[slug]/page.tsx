@@ -8,6 +8,7 @@ import {
   generateCareerProgression,
   generateLocationInsights 
 } from '@/lib/content-generator';
+import { BrowseSimilar } from './browse-similar';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -99,18 +100,17 @@ export default async function CompensationPage({ params }: Props) {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="text-sm text-gray-600 mb-1">Equity (p50)</div>
           <div className="text-3xl font-bold text-purple-600">
-            {(p50.equity_pct * 100).toFixed(2)}%
+            {p50.equity_pct.toFixed(2)}%
           </div>
         </div>
       </div>
 
-      {/* Percentile Breakdown */}
+      {/* Percentile Table */}
       <div className="bg-white rounded-lg shadow p-6 mb-8">
         <h2 className="text-2xl font-bold mb-4">Compensation Breakdown by Percentile</h2>
         <p className="text-gray-600 mb-6">
           View how compensation varies across different percentiles for this role.
         </p>
-        
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
@@ -122,26 +122,30 @@ export default async function CompensationPage({ params }: Props) {
               </tr>
             </thead>
             <tbody className="divide-y">
-              {['p25', 'p50', 'p75', 'p90'].map((percentile) => {
-                const item = byPercentile[percentile];
-                if (!item) return null;
+              {['p25', 'p50', 'p75', 'p90'].map((pct) => {
+                const row = byPercentile[pct];
+                if (!row) return null;
+                
+                const labels: Record<string, string> = {
+                  p25: '25th (Entry)',
+                  p50: '50th (Median)',
+                  p75: '75th (Experienced)',
+                  p90: '90th (Top Performer)',
+                };
                 
                 return (
-                  <tr key={percentile} className={percentile === 'p50' ? 'bg-blue-50' : ''}>
+                  <tr key={pct} className={pct === 'p50' ? 'bg-blue-50' : ''}>
                     <td className="px-4 py-3 font-medium">
-                      {percentile === 'p25' && '25th (Entry)'}
-                      {percentile === 'p50' && '50th (Median)'}
-                      {percentile === 'p75' && '75th (Experienced)'}
-                      {percentile === 'p90' && '90th (Top Performer)'}
+                      {labels[pct]}
                     </td>
                     <td className="px-4 py-3 text-right font-mono">
-                      ${item.salary.toLocaleString()}
+                      ${row.salary.toLocaleString()}
                     </td>
                     <td className="px-4 py-3 text-right font-mono">
-                      ${item.total_cash.toLocaleString()}
+                      ${row.total_cash.toLocaleString()}
                     </td>
                     <td className="px-4 py-3 text-right font-mono">
-                      {(item.equity_pct * 100).toFixed(2)}%
+                      {row.equity_pct.toFixed(2)}%
                     </td>
                   </tr>
                 );
@@ -170,7 +174,7 @@ export default async function CompensationPage({ params }: Props) {
         </p>
       </div>
 
-      {/* Equity Deep Dive */}
+      {/* Equity Insights */}
       <div className="bg-white rounded-lg shadow p-6 mb-8">
         <h2 className="text-2xl font-bold mb-4">Understanding Your Equity</h2>
         <p className="text-gray-700 leading-relaxed mb-4">
@@ -189,8 +193,7 @@ export default async function CompensationPage({ params }: Props) {
         </p>
         <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4">
           <p className="text-sm text-gray-700">
-            <strong>Pro tip:</strong> Always ask about the company's fully-diluted cap table, liquidation preferences, 
-            and post-termination exercise window (ideally 5-10 years, not 90 days).
+            <strong>Pro tip:</strong> Always ask about the company's fully-diluted cap table, liquidation preferences, and post-termination exercise window (ideally 5-10 years, not 90 days).
           </p>
         </div>
       </div>
@@ -214,7 +217,7 @@ export default async function CompensationPage({ params }: Props) {
         </p>
       </div>
 
-      {/* Career Progression */}
+      {/* Career Path */}
       <div className="bg-white rounded-lg shadow p-6 mb-8">
         <h2 className="text-2xl font-bold mb-4">Career Growth Path</h2>
         <p className="text-gray-700 leading-relaxed">
@@ -251,6 +254,14 @@ export default async function CompensationPage({ params }: Props) {
           })}
         </p>
       </div>
+
+      {/* Browse Similar - NEW! */}
+      <BrowseSimilar 
+        currentRole={sample.role}
+        currentLevel={sample.level_label.toLowerCase()}
+        currentStage={sample.stage}
+        currentLocation={sample.location}
+      />
 
       {/* Context */}
       <div className="bg-blue-50 rounded-lg p-6 mb-8">
